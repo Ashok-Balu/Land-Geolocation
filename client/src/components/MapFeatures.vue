@@ -130,8 +130,8 @@ const getPlacesFromApi = async () => {
         fuzzyMatch: true,
         language: "en",
         limit: 10,
-        proximity: props.locationCoordinates
-          ? `${props.locationCoordinates.lng},${props.locationCoordinates.lat}`
+        proximity: props?.locationCoordinates
+          ? `${props?.locationCoordinates?.lng},${props?.locationCoordinates?.lat}`
           : "0,0",
       });
       //calling API
@@ -140,8 +140,8 @@ const getPlacesFromApi = async () => {
         params
       );
       getPlacesResponse.error
-        ? handlegetPlacesFailure(getPlacesResponse.error)
-        : handlegetPlacesSuccess(getPlacesResponse.data);
+        ? handlegetPlacesFailure(getPlacesResponse?.error)
+        : handlegetPlacesSuccess(getPlacesResponse?.data);
     }
   }, 750);
 };
@@ -153,12 +153,12 @@ const handlegetPlacesFailure = (error) => {
 
 const handlegetPlacesSuccess = (getPlacesResponse) => {
   //Response success
-  searchData.value = getPlacesResponse.data.features;
+  searchData.value = getPlacesResponse?.data?.features;
 };
 
 const selectResult = (result) => {
   selectedResult.value = result;
-  emit("plotResult", result.geometry);
+  emit("plotResult", result?.geometry);
 };
 
 const removeResult = () => {

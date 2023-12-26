@@ -60,7 +60,7 @@ const getGeolocation = () => {
   // otherwise, remove location
   locationCoordinates.value = null;
   sessionStorage.removeItem("locationCoordinates");
-  map.value.removeLayer(geoMarker.value);
+  map.value.removeLayer(geoMarker?.value);
 };
 
 const setCoords = (pos) => {
@@ -69,8 +69,8 @@ const setCoords = (pos) => {
 
   // set locationCoordinates in session storage
   const setSessionCoords = {
-    lat: pos.coords.latitude,
-    lng: pos.coords.longitude,
+    lat: pos?.coords?.latitude,
+    lng: pos?.coords?.longitude,
   };
   sessionStorage.setItem(
     "locationCoordinates",
@@ -80,7 +80,7 @@ const setCoords = (pos) => {
   // set ref locationCoordinates value
   locationCoordinates.value = setSessionCoords;
 
-  plotGeoLocation(locationCoordinates.value);
+  plotGeoLocation(locationCoordinates?.value);
 };
 
 const getLocError = (error) => {
@@ -99,20 +99,20 @@ const plotGeoLocation = (locationCoordinates) => {
 
   // create new marker with locationCoordinates and custom marker
   geoMarker.value = leaflet
-    .marker([locationCoordinates.lat, locationCoordinates.lng], {
+    .marker([locationCoordinates?.lat, locationCoordinates?.lng], {
       icon: customMarker,
     })
     .addTo(map.value);
 
   // set map view to current location
-  map.value.setView([locationCoordinates.lat, locationCoordinates.lng], 10);
+  map.value.setView([locationCoordinates?.lat, locationCoordinates?.lng], 10);
 };
 
 
 const plotResult = (locationCoordinates) => {
   // If there is already a marker, remove it. Only allow 1
   if (resultMarker.value) {
-    map.value.removeLayer(resultMarker.value);
+    map.value.removeLayer(resultMarker?.value);
   }
   const customMarker = leaflet.icon({
     iconUrl: markedLocation,
@@ -120,20 +120,20 @@ const plotResult = (locationCoordinates) => {
   });
   resultMarker.value = leaflet
     .marker(
-      [locationCoordinates.coordinates[1], locationCoordinates.coordinates[0]],
+      [locationCoordinates?.coordinates[1], locationCoordinates?.coordinates[0]],
       {
         icon: customMarker,
       }
     )
     .addTo(map.value);
   map.value.setView(
-    [locationCoordinates.coordinates[1], locationCoordinates.coordinates[0]],
+    [locationCoordinates?.coordinates[1], locationCoordinates?.coordinates[0]],
     13
   );
 };
 
 const removeResult = () => {
-  map.value.removeLayer(resultMarker.value);
+  map.value.removeLayer(resultMarker?.value);
 };
 
 const closegeoLocationError = () => {
@@ -142,7 +142,7 @@ const closegeoLocationError = () => {
 };
 
 const toggleSearchResults = () => {
-  showResult.value = !showResult.value;
+  showResult.value = !showResult?.value;
 };
 const closeSearchResults = () => {
   showResult.value = null;
@@ -159,13 +159,13 @@ onMounted(() => {
     // add tile layers
   leaflet
     .tileLayer(
-      `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${VUE_APP_API_KEY.value}`,
+      `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${VUE_APP_API_KEY?.value}`,
       {
         maxZoom: 18,
         id: "mapbox/streets-v11",
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: VUE_APP_API_KEY.value,
+        accessToken: VUE_APP_API_KEY?.value,
       }
     )
     .addTo(map.value);
